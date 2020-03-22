@@ -28,7 +28,7 @@ class _RegisterFormState extends State<RegisterForm> {
   // text field state
   String nom= '';
     String email= '';
-
+String password='';
   String prenom = '';
   String utilisateur = '';
   String error ='';
@@ -54,6 +54,7 @@ int _currentStep=0;
           child: Stepper(
        type: StepperType.horizontal,
          steps: _mySteps(),
+         
          currentStep: this._currentStep,
          onStepTapped: (step){
            setState(() {
@@ -61,12 +62,15 @@ int _currentStep=0;
            });
          },
          onStepContinue: (){
+
            setState(() {
-             if(_formKey.currentState.validate() && this._currentStep>=0)
+             if(_formKey.currentState.validate() && _currentStep < _mySteps().length)
               this._currentStep=this._currentStep+1; 
               else{
                   setState(()=> error = 'Oups il faut tout remplir ! ' );
 
+              if(this._currentStep==2)
+                print('On envoie un email'); 
               }
            });
          },
@@ -90,6 +94,7 @@ int _currentStep=0;
     List<Step> _steps= [
       Step(
         title: Text('Etape 1 '),
+        
         content:Column(children: <Widget>[
           /*Champs Nom*/ 
               Material(
@@ -118,6 +123,7 @@ int _currentStep=0;
                 },
               ),
               ), 
+            
               SizedBox(height: 12),
               /*Champs Prenom*/ 
               Material(
@@ -241,11 +247,88 @@ int _currentStep=0;
                 },
               ),
               ),
+              
+            /*Champs Email*/ 
+              SizedBox(height: 12.0),
+            /*Champs Mot de passe*/ 
+              Material(
+                elevation: 4,
+                 borderRadius: BorderRadius.circular(30.0),
+                 color: Colors.white,
+                child : 
+                 TextFormField(
+                obscureText: true,
+                    //TEXT 
+                   style: TextStyle(
+                      color:  Colors.grey[900], 
+                      fontFamily: "Roboto",
+                      fontStyle:  FontStyle.normal,
+                      fontSize: 16.0
+                    ), 
+                    //SHAPE
+                    decoration: InputDecoration(
+                        contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                        hintText: "Mot de passe",
+                        suffixIcon: Icon (
+                            Icons.remove_red_eye, 
+                            color:  Colors.teal[800],
+                        ),
+                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0), )
+                  ),
+                  //Validation de l'entrée
+                controller: _pass,
+                validator: (val) => val.length < 6 ? 'Mot de passe invalide' : null,
+                onChanged: (val) {
+                  setState(() => password = val);
+                },
+              ),
+              ),
+            /*Champs Mot de passe*/
+            SizedBox(height: 12),
+            /*Champs Confirmation Mot de passe*/ 
+              Material(
+                elevation: 4,
+                 borderRadius: BorderRadius.circular(30.0),
+                child : 
+                 TextFormField(
+                obscureText: true,
+                    //TEXT 
+                   style: TextStyle(
+                      color:  Colors.grey[900], 
+                      fontFamily: "Roboto",
+                      fontStyle:  FontStyle.normal,
+                      fontSize: 16.0
+                    ), 
+                    //SHAPE
+                    decoration: InputDecoration(
+                        contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                        hintText: "Confirmez le mot de passe",
+                        suffixIcon: Icon (
+                            Icons.remove_red_eye, 
+                            color:  Colors.teal[800],
+                        ),
+                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
+                  ),
+                  controller: _confirmPass,
+                  //Validation de l'entrée
+                  validator: (val){
+                              if(val.isEmpty)
+                                   return 'Empty';
+                              if(val != _pass.text)
+                                   return 'Not Match';
+                              return null;
+                              }, 
+                onChanged: (val) {
+                  setState(() => password = val);
+                },
+              ),
+              ),
+            /*Champs Confirmation Mot de passe*/ 
         ],),
         isActive: _currentStep >=1,  ),
         Step(
         title: Text('Etape 3 '),
-        content:TextField(),
+        content:Text('Un email de validation vous est envoyé, veuillez vérifier votre boite mail'),
         isActive: _currentStep >=2,  ),
     ]; 
     return _steps; 
