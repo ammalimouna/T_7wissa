@@ -46,15 +46,77 @@ int _currentStep=0;
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-    
+    appBar: AppBar(
+          backgroundColor: Colors.white,
+          elevation: 0.0,
+        ),
       
      body: Center(
+       
+       widthFactor: 35,
        child: Form(
           key: _formKey,
           child: Stepper(
        type: StepperType.horizontal,
+       
          steps: _mySteps(),
-         
+         controlsBuilder: (BuildContext context,
+          {VoidCallback onStepContinue, VoidCallback onStepCancel}) {
+        return Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            
+                Material(
+                  
+                borderRadius: BorderRadius.circular(30.0),
+              
+                color: Colors.deepOrange,
+                child: 
+                MaterialButton(
+                minWidth:125,
+                height: 1.2,
+                child: 
+                Text("SUIVANT",
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                      color:  const Color(0xffffffff),
+                      fontWeight: FontWeight.w500,
+                      fontFamily: "Roboto",
+                      fontStyle:  FontStyle.normal,
+                      fontSize: 16.0
+                  ),
+                ),
+                 onPressed: onStepContinue,
+                
+              ),
+              ),
+               SizedBox(width: 12,),
+              Material(
+                borderRadius: BorderRadius.circular(30.0),
+                color: Colors.grey[350],
+                child: 
+               
+                MaterialButton(
+                minWidth:125,
+                height: 1.2,
+                child: 
+                Text("ANNULER",
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                      color:  const Color(0xffffffff),
+                      fontWeight: FontWeight.w500,
+                      fontFamily: "Roboto",
+                      fontStyle:  FontStyle.normal,
+                      fontSize: 16.0
+                  ),
+                ),
+              onPressed: onStepCancel,  
+              ),
+              ),
+          ],
+        );
+      },
          currentStep: this._currentStep,
          onStepTapped: (step){
            setState(() {
@@ -62,18 +124,19 @@ int _currentStep=0;
            });
          },
          onStepContinue: (){
-
            setState(() {
-             if(_formKey.currentState.validate() && _currentStep < _mySteps().length)
+             if(_formKey.currentState.validate() && _currentStep < _mySteps().length-1)
               this._currentStep=this._currentStep+1; 
               else{
                   setState(()=> error = 'Oups il faut tout remplir ! ' );
 
-              if(this._currentStep==2)
+              if(this._currentStep==_mySteps().length) 
                 print('On envoie un email'); 
+                dynamic result =  _auth.registerWithEmailAndPassword(email, password,nom,prenom,phoneNumber,utilisateur);
               }
            });
          },
+         
          onStepCancel: (){
            setState(() {
               if(this._currentStep >0 )
@@ -94,9 +157,9 @@ int _currentStep=0;
     List<Step> _steps= [
       Step(
         title: Text('Etape 1 '),
-        
         content:Column(children: <Widget>[
           /*Champs Nom*/ 
+          SizedBox(height: 50) ,
               Material(
                 elevation: 4,
                  borderRadius: BorderRadius.circular(30.0),
@@ -212,9 +275,11 @@ int _currentStep=0;
                   setState(() => phoneNumber = val);
                 },
               ),
-              ), 
+              ),
+              SizedBox(height: 72,), 
         ],), 
-        isActive: _currentStep >=0,  ),
+        isActive: _currentStep >=0, 
+        state: _getState(1), ),
         Step(
         title: Text('Etape 2'),
         content:Column(children: <Widget>[
@@ -243,7 +308,7 @@ int _currentStep=0;
                   //Validation de l'entrée 
                   validator: (val) => val.isEmpty ? 'Entrez un nom d''utilisateur'  : null,
                   onChanged: (val) {
-                  setState(() => email = val);
+                  setState(() => utilisateur = val);
                 },
               ),
               ),
@@ -321,16 +386,39 @@ int _currentStep=0;
                 onChanged: (val) {
                   setState(() => password = val);
                 },
+                
               ),
               ),
             /*Champs Confirmation Mot de passe*/ 
-        ],),
-        isActive: _currentStep >=1,  ),
+        
+          SizedBox(height: 72,),
+          ],),
+          state: _getState(2),
+        isActive: _currentStep >=1, 
+         
+        ),
         Step(
         title: Text('Etape 3 '),
-        content:Text('Un email de validation vous est envoyé, veuillez vérifier votre boite mail'),
+          content:Column(children: <Widget>[
+              SizedBox(
+                      height: 225,
+                      width: 159,
+                      child: Image(
+                       image: AssetImage('assets/logo.png'),
+                        fit: BoxFit.contain,
+                      ),
+                    ),
+          ],),
+      
+        state: _getState(3),
         isActive: _currentStep >=2,  ),
     ]; 
     return _steps; 
+  }
+  StepState _getState(int i) {
+    if (_currentStep >= i)
+      return StepState.complete;
+    else
+      return StepState.indexed;
   }
 }
