@@ -35,12 +35,7 @@ String password='';
   String phoneNumber;
 String phoneIsoCode;
 int _currentStep=0; 
-/*void onPhoneNumberChange(String number, String internationalizedPhoneNumber, String isoCode) {
-    setState(() {
-       phoneNumber = number;
-       phoneIsoCode = isoCode;
-    });
-} */
+
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +44,13 @@ int _currentStep=0;
     appBar: AppBar(
           backgroundColor: Colors.white,
           elevation: 0.0,
+          title: Text('Inscription',
+          style: TextStyle(
+            color:  Colors.black,
+                      fontFamily: "Roboto",
+                      fontStyle:  FontStyle.normal,
+                      fontSize: 17.0, 
+          ),), 
         ),
       
      body: Center(
@@ -276,7 +278,7 @@ int _currentStep=0;
                 },
               ),
               ),
-              SizedBox(height: 72,), 
+              SizedBox(height: 20,), 
         ],), 
         isActive: _currentStep >=0, 
         state: _getState(1), ),
@@ -284,7 +286,7 @@ int _currentStep=0;
         title: Text('Etape 2'),
         content:Column(children: <Widget>[
            /*Champs nom d'utilisateur*/ 
-             SizedBox(height: 76),
+             SizedBox(height: 50),
               Material(
                 elevation: 4,
                  borderRadius: BorderRadius.circular(30.0),
@@ -400,17 +402,27 @@ int _currentStep=0;
         Step(
         title: Text('Etape 3 '),
           content:Column(children: <Widget>[
+              Text('Un mail de confirmation vous a été envoyé ! ',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                    color:  Colors.grey[900], 
+                      fontFamily: "Roboto",
+                      fontStyle:  FontStyle.normal,
+                      fontSize: 19.0
+               ),),
               SizedBox(
-                      height: 225,
-                      width: 159,
+                      height: 250,
+                      width: 250,
                       child: Image(
-                       image: AssetImage('assets/logo.png'),
+                       image: AssetImage('assets/icone.png'),
                         fit: BoxFit.contain,
                       ),
                     ),
-          ],),
+                              SizedBox(height: 0,),
+
+          ],
+          ),
       
-        state: _getState(3),
         isActive: _currentStep >=2,  ),
     ]; 
     return _steps; 
