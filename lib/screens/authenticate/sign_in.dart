@@ -5,7 +5,7 @@ import 'package:myapp/services/auth.dart';
 class SignIn extends StatefulWidget {
 
   final Function toggleView;
-  SignIn({ this.toggleView });
+  SignIn({ this.toggleView});
 
   @override
   _SignInState createState() => _SignInState();

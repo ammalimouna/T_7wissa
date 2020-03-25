@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:myapp/models/user.dart';
 
 class DatabaseService {
 
@@ -16,5 +17,14 @@ class DatabaseService {
       'numtel': numtel,
     });
   }
-
+   UserData _userDataFromSnapchot(DocumentSnapshot snapshot){
+     return UserData( uid: uid,
+       identifiant: snapshot.data['identifiant'],); 
+     
+     }
+   
+    //get user stream 
+    Stream<UserData> get utilisateursDonnees{
+      return utilisateurCollection.document(uid).snapshots().map(_userDataFromSnapchot); 
+    }
 }
