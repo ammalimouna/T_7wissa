@@ -17,14 +17,14 @@ class DatabaseService {
       'numtel': numtel,
     });
   }
-   UserData _userDataFromSnapchot(DocumentSnapshot snapshot){
+  /* UserData _userDataFromSnapchot(DocumentSnapshot snapshot){
      return UserData( uid: uid,
        identifiant: snapshot.data['identifiant'],); 
      
-     }
+     }*/
    
     //get user stream 
-    Stream<UserData> get utilisateursDonnees{
+  /*  Stream<UserData> get utilisateursDonnees{
       return utilisateurCollection.document(uid).snapshots().map(_userDataFromSnapchot); 
-    }
+    }*/
 }
