@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:myapp/models/user.dart';
 import 'package:myapp/services/auth.dart';
-import 'package:myapp/services/auth.dart';
+import 'package:myapp/services/database.dart';
 import 'package:provider/provider.dart';
 
 class Home extends StatelessWidget {
@@ -13,18 +13,19 @@ class Home extends StatelessWidget {
 
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
-_buildlist(BuildContext context, DocumentSnapshot document){
+/*_buildlist(BuildContext context, DocumentSnapshot document){
   return ListTile(
     title:
       
-       Text(
-      document['identifiant']),
+       
     
-  );           
+  );        
     
-}
+}*/
   @override
   Widget build(BuildContext context) {
+        final user = Provider.of<User>(context);
+
         return  Container(
           child: Scaffold(
            key: _scaffoldKey,
@@ -56,15 +57,23 @@ _buildlist(BuildContext context, DocumentSnapshot document){
                            ),
                            Expanded(
                              flex: 1,
-                             child: StreamBuilder(
-                               stream: Firestore.instance.collection('utilisateur').snapshots(),
+                             child: StreamBuilder<UserData>(
+                               stream: DatabaseService(uid: user.uid).utilisateursDonnees,
                                builder: (context,snapshot){
-                                  if(!snapshot.hasData) return const Text('Loading');
+                                 if(snapshot.hasData){
+                                   UserData userData=snapshot.data; 
+                                    print(userData.identifiant); 
+                                   return  Text(
+                                        userData.identifiant); 
+                                 }else{
+                                   return Text('Loading'); 
+                                   
+                                 }
+                                  /*if(!snapshot.hasData) return const Text('Loading');
                                   return ListView.builder(
-                                    itemExtent: 80,
-                                    itemCount: 1,
-                                    itemBuilder: (context,index)=>(_buildlist(context,snapshot.data.documents[index])),
-                                    );
+                                    itemCount: 1,*/ 
+                                   // itemBuilder: (context,index)=>(_buildlist(context,snapshot.data.documents[index])),
+                                    
                                }
                              ),
                            ), 
@@ -76,6 +85,7 @@ _buildlist(BuildContext context, DocumentSnapshot document){
                                    title: Text('Paramètres du compte'), 
                                  onTap: () async {
                                    Navigator.of(context).pop();
+                                   
                                  },
                                ),
                                ListTile(
@@ -108,13 +118,10 @@ _buildlist(BuildContext context, DocumentSnapshot document){
                       )
                       
                          );
-            //  } 
+            
             }
-      
-      /*  User _userFromFirebaseUser(FirebaseUser use) {
-              return use != null ? User(uid: use.uid) : null;
-
-        }*/
+   
+       
     
   }
 

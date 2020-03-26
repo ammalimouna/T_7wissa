@@ -134,7 +134,7 @@ int _currentStep=0;
 
               if(this._currentStep==_mySteps().length) 
                 print('On envoie un email'); 
-                dynamic result =  _auth.registerWithEmailAndPassword(email, password,nom,prenom,phoneNumber,utilisateur);
+                dynamic result =  _auth.registerWithEmailAndPassword(email, password,nom,prenom,utilisateur,phoneNumber);
               }
            });
          },

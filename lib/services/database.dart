@@ -17,14 +17,22 @@ class DatabaseService {
       'numtel': numtel,
     });
   }
-  /* UserData _userDataFromSnapchot(DocumentSnapshot snapshot){
-     return UserData( uid: uid,
-       identifiant: snapshot.data['identifiant'],); 
+
+  //user data from snapshot 
+   UserData _userDataFromSnapchot(DocumentSnapshot snapshot){
+     return UserData( 
+       uid: uid,
+       identifiant: snapshot.data['identifiant'],
+       nom: snapshot.data['nom'],
+       prenom: snapshot.data['prenom'], 
+       numtel: snapshot.data['numtel'], 
+       ); 
      
-     }*/
+     }
    
     //get user stream 
-  /*  Stream<UserData> get utilisateursDonnees{
-      return utilisateurCollection.document(uid).snapshots().map(_userDataFromSnapchot); 
-    }*/
+   Stream<UserData> get utilisateursDonnees{
+      return utilisateurCollection.document(uid).snapshots()
+      .map(_userDataFromSnapchot); 
+    }
 }
