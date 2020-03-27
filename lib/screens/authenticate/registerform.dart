@@ -15,7 +15,6 @@ class RegisterForm extends StatefulWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return null;
   }
 class _RegisterFormState extends State<RegisterForm> {
@@ -25,23 +24,23 @@ class _RegisterFormState extends State<RegisterForm> {
   final TextEditingController _pass = TextEditingController();
   final TextEditingController _confirmPass = TextEditingController();
 
-  // text field state
+  // Champs du fomulaire (infomations relatives à un nouveau utilisateurs) 
   String nom= '';
-    String email= '';
-String password='';
+  String email= '';
+  String password='';
   String prenom = '';
   String utilisateur = '';
-  String error ='';
   String phoneNumber;
-String phoneIsoCode;
-int _currentStep=0; 
+
+  int _currentStep=0; //Controle du steper 
+  String error ='';
 
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-    appBar: AppBar(
+       appBar: AppBar(
           backgroundColor: Colors.white,
           elevation: 0.0,
           title: Text('Inscription',
@@ -49,75 +48,67 @@ int _currentStep=0;
             color:  Colors.black,
                       fontFamily: "Roboto",
                       fontStyle:  FontStyle.normal,
-                      fontSize: 17.0, 
-          ),), 
+                      fontSize: 17.0, ),
+            ), 
         ),
       
      body: Center(
-       
        widthFactor: 35,
        child: Form(
           key: _formKey,
           child: Stepper(
-       type: StepperType.horizontal,
-       
-         steps: _mySteps(),
-         controlsBuilder: (BuildContext context,
-          {VoidCallback onStepContinue, VoidCallback onStepCancel}) {
-        return Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            
-                Material(
-                  
-                borderRadius: BorderRadius.circular(30.0),
-              
-                color: Colors.deepOrange,
-                child: 
-                MaterialButton(
-                minWidth:125,
-                height: 1.2,
-                child: 
-                Text("SUIVANT",
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                      color:  const Color(0xffffffff),
-                      fontWeight: FontWeight.w500,
-                      fontFamily: "Roboto",
-                      fontStyle:  FontStyle.normal,
-                      fontSize: 16.0
-                  ),
-                ),
-                 onPressed: onStepContinue,
-                
-              ),
-              ),
-               SizedBox(width: 12,),
-              Material(
-                borderRadius: BorderRadius.circular(30.0),
-                color: Colors.grey[350],
-                child: 
-               
-                MaterialButton(
-                minWidth:125,
-                height: 1.2,
-                child: 
-                Text("ANNULER",
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                      color:  const Color(0xffffffff),
-                      fontWeight: FontWeight.w500,
-                      fontFamily: "Roboto",
-                      fontStyle:  FontStyle.normal,
-                      fontSize: 16.0
-                  ),
-                ),
-              onPressed: onStepCancel,  
-              ),
-              ),
-          ],
-        );
+              type: StepperType.horizontal,
+                steps: _mySteps(),
+                controlsBuilder: (BuildContext context,
+                  {VoidCallback onStepContinue, VoidCallback onStepCancel}) {
+                        return Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                                Material(
+                                    borderRadius: BorderRadius.circular(30.0),
+                                    color: Colors.deepOrange,
+                                    child: 
+                                    MaterialButton(
+                                    minWidth:125,
+                                    height: 1.2,
+                                    child: 
+                                    Text("SUIVANT",
+                                      textAlign: TextAlign.center,
+                                      style: const TextStyle(
+                                          color:  const Color(0xffffffff),
+                                          fontWeight: FontWeight.w500,
+                                          fontFamily: "Roboto",
+                                          fontStyle:  FontStyle.normal,
+                                          fontSize: 16.0
+                                      ),
+                                    ),
+                                    onPressed: onStepContinue,
+                                  ),
+                                  ),
+                              SizedBox(width: 12,),
+                              Material(
+                                borderRadius: BorderRadius.circular(30.0),
+                                color: Colors.grey[350],
+                                child:  MaterialButton(
+                                    minWidth:125,
+                                    height: 1.2,
+                                    child: 
+                                    Text("ANNULER",
+                                      textAlign: TextAlign.center,
+                                      style: const TextStyle(
+                                          color:  const Color(0xffffffff),
+                                          fontWeight: FontWeight.w500,
+                                          fontFamily: "Roboto",
+                                          fontStyle:  FontStyle.normal,
+                                          fontSize: 16.0
+                                      ),
+                                    ),
+                                  onPressed: onStepCancel,  
+                                  ),
+                              ),
+                          ],
+                        );
       },
          currentStep: this._currentStep,
          onStepTapped: (step){
@@ -138,7 +129,6 @@ int _currentStep=0;
               }
            });
          },
-         
          onStepCancel: (){
            setState(() {
               if(this._currentStep >0 )
@@ -146,14 +136,7 @@ int _currentStep=0;
              else
                this._currentStep=0; 
            });
-          
-         },
-      ), ), 
-       
-      ),
-        
-         
-    );
+         }, ), ), ),);
   }
   List<Step> _mySteps(){
     List<Step> _steps= [
