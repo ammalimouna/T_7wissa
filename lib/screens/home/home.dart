@@ -13,15 +13,6 @@ class Home extends StatelessWidget {
 
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
-/*_buildlist(BuildContext context, DocumentSnapshot document){
-  return ListTile(
-    title:
-      
-       
-    
-  );        
-    
-}*/
   @override
   Widget build(BuildContext context) {
         final user = Provider.of<User>(context);
@@ -47,10 +38,10 @@ class Home extends StatelessWidget {
                            Expanded(
                              flex: 1,
                              child: SizedBox(
-                                   height: 97,
-                                   width: 97,
+                                   height:250,
+                                   width: 250,
                                    child: Image(
-                             image: AssetImage('assets/MOUNA.png'),
+                             image: AssetImage('assets/avatar.png'),
                               fit: BoxFit.contain,
                             ),
                                  ),
@@ -69,10 +60,7 @@ class Home extends StatelessWidget {
                                    return Text('Loading'); 
                                    
                                  }
-                                  /*if(!snapshot.hasData) return const Text('Loading');
-                                  return ListView.builder(
-                                    itemCount: 1,*/ 
-                                   // itemBuilder: (context,index)=>(_buildlist(context,snapshot.data.documents[index])),
+                                 
                                     
                                }
                              ),
