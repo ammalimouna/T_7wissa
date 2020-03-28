@@ -1,6 +1,6 @@
-import 'package:myapp/screens/wrapper.dart';
+import 'package:projet_2cp/screens/wrapper.dart';
 import 'package:flutter/material.dart';
-import 'package:myapp/services/auth.dart';
+import 'package:projet_2cp/services/auth.dart';
 import 'package:provider/provider.dart';
 import 'models/user.dart';
 void main() => runApp(MyApp());
