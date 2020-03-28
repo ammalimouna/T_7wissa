@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:myapp/models/user.dart';
 import 'package:myapp/services/auth.dart';
 import 'package:myapp/services/database.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:sliding_up_panel/sliding_up_panel.dart';
+
 import 'package:provider/provider.dart';
 
 class Home extends StatelessWidget {
